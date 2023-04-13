@@ -26,23 +26,23 @@ public class CQRealEstate {
     double landArea;
     
     public void addDefaultValues(){
-        buyersArray.add(new Buyer("bob", "128 helloworld street", 041316524));
-        sellersArray.add(new Seller("John", "64 bit rd", 041316524));
-        sellersArray.add(new Seller("Jeff", "32 bunny street", 041316524));
-        buyersArray.add(new Buyer("David", "16 carrot street", 041316524));
+        buyersArray.add(new Buyer("bob", "128 helloworld street", "0411235813"));
+        sellersArray.add(new Seller("John", "64 bit rd", "0421345589"));
+        sellersArray.add(new Seller("Jeff", "32 bunny street", "0415927585"));
+        buyersArray.add(new Buyer("David", "16 carrot street", "0421716312"));
         
         propertiesArray.add(new Land(123213131, 5000, "512 first street"));
         propertiesArray.add(new HouseAndLand(1515311212, 1500, "69 That street", 1000, 32, 128));
         
-        salesArray.add(new Sale(propertiesArray.get(0), "30/12/2020", 1000000, sellersArray.get(0), buyersArray.get(0)));
-        salesArray.add(new Sale(propertiesArray.get(1), "10/1/2023", 559000, sellersArray.get(1), buyersArray.get(1)));
-        salesArray.get(1).getProperty().setSold(true);
+//        salesArray.add(new Sale(propertiesArray.get(1), "10/1/2023", 559000, sellersArray.get(1), buyersArray.get(1)));
+//        salesArray.get(0).getProperty().setSold(true);
     }
     
     //Displays the first menu and calls functions basing on user inputs
     public void displayWelcomeMenu(){
         do{
-            System.out.println("\n------------ Welcome to CQRealEstate ------------ ");
+            System.out.println("\n------------ Welcome To CQRealEstate ------------ ");
+            System.out.println("__________ Created By Francis Renzaho ___________\n");
             System.out.println("""
                                [0] Make A Sale
                                [1] Add Seller
@@ -134,11 +134,14 @@ public class CQRealEstate {
                     return;
                     
                }
-            }while(!isEmpty(selection) && !isNumber(selection));
+            }while(!isEmpty(selection) || !isNumber(selection));
             findSaleWithId(Integer.parseInt(selection));
+            
+            //check selection equals 66, if true display all sales
             if(selection.equals("66")){
                 displayAllSales();
             }
+            //
             else if(itemCount == salesArray.size()){
                 System.out.println("[-] Sale with SaleID: "+selection+ " is not Found\n");
             } else {
@@ -167,7 +170,7 @@ public class CQRealEstate {
         System.out.println("\n--------- SHOWING RECENT SALES ---------");
 
         if(salesArray.isEmpty()){
-            System.out.println("[-] No Sold Sales Found..");
+            System.out.println("[-] No Recent Sales Found..");
             displayWelcomeMenu();
             return;
         }
@@ -322,7 +325,7 @@ public class CQRealEstate {
     //collects sellers and buyers info
     public void getClientsInfo(String client){
         String name;
-        int phoneNumber;
+        String phoneNumber;
         
         //gets client's Name
         do{
@@ -333,7 +336,7 @@ public class CQRealEstate {
                 displayWelcomeMenu();
                 return;
             }
-        }while(!isEmpty(selection) || isString(selection));
+        }while(!isEmpty(selection) && !isString(selection));
         
         name = selection;
         
@@ -346,7 +349,7 @@ public class CQRealEstate {
                 displayWelcomeMenu();
                 return;
             }
-        }while(!isEmpty(selection) || isString(selection));
+        }while(!isEmpty(selection) && !isString(selection));
         
         address = selection;
         
@@ -360,7 +363,7 @@ public class CQRealEstate {
             }
         }while(!isEmpty(selection) || !isNumber(selection));
          
-        phoneNumber = Integer.parseInt(selection);
+        phoneNumber = selection;
         
         //check who called the function and create the object
         if(client.equals("Seller")){
@@ -408,7 +411,7 @@ public class CQRealEstate {
                 displayWelcomeMenu();
                 return;
             }
-        }while(!isEmpty(selection) || isString(selection));
+        }while(!isEmpty(selection) && !isString(selection));
         address = selection;
         
         //get Land Area
@@ -619,7 +622,7 @@ public class CQRealEstate {
         //first, it tries to convert the given value to int
         //if it fails then the provided value is not an Integer
         try{
-            Integer.parseInt(value);
+            Integer.valueOf(value);
             return true;
         }catch(NumberFormatException e){
             System.out.println("[-] Enter a valid number!!");
@@ -629,11 +632,11 @@ public class CQRealEstate {
     
     public boolean isString(String value){
         try{
-            Integer.parseInt(value);
+            Integer.valueOf(value);
             System.out.println("[-] Error: No Numbers Allowed. Try again..");
-            return true;
-        }catch(NumberFormatException e){
             return false;
+        }catch(NumberFormatException e){
+            return true;
         }
     }
     

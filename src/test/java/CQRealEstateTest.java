@@ -22,10 +22,10 @@ public class CQRealEstateTest {
     private final ArrayList<Sale> salesArray = new ArrayList<>();
     
     public void allTests(){
-        buyersArray.add(new Buyer("bob", "128 helloworld street", 041316524));
-        sellersArray.add(new Seller("John", "64 bit rd", 041316524));
-        sellersArray.add(new Seller("Jeff", "32 bunny street", 041316524));
-        buyersArray.add(new Buyer("David", "16 carrot street", 041316524));
+        buyersArray.add(new Buyer("bob", "128 helloworld street", "0411235813"));
+        sellersArray.add(new Seller("John", "64 bit rd", "0421345589"));
+        sellersArray.add(new Seller("Jeff", "32 bunny street", "0415927585"));
+        buyersArray.add(new Buyer("David", "16 carrot street", "0421716312"));
         
         sellersArray.forEach(client -> {
             System.out.println(client.toString());

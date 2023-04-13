@@ -15,9 +15,9 @@ public class Clients {
 
     private String name;
     private String address;
-    private long phoneNumber;
+    private String phoneNumber;
     
-    public Clients(String name, String address, int phoneNumber){
+    public Clients(String name, String address, String phoneNumber){
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -48,11 +48,11 @@ public class Clients {
         this.address = address;
     }
 
-    public long getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(long phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
     
