@@ -117,6 +117,7 @@ public class CQRealEstate {
         System.out.println("\n--------- SEARCHING FOR SALE ---------");
         if(salesArray.isEmpty()){
             System.out.println("\n[-] No Existing Sales Found..");
+            displayWelcomeMenu();
             return;
         }
         boolean isRunning = true;
@@ -148,7 +149,6 @@ public class CQRealEstate {
                 findSale();
             }
         }
-       
         
     }
     public void findSaleWithId(int id){
@@ -375,10 +375,6 @@ public class CQRealEstate {
         
         //check if user wants to add another object, goto main menu or exit
         lastExitComformation(client);
-            
-            
-    
-        
     
     }
     //collect land info and create object
@@ -438,10 +434,7 @@ public class CQRealEstate {
             lastExitComformation(landOrLandAndHouse);
         }
         
-        
-        
     }
-    
     
     //collects land and House infomation
     public void getLandAndHouseInfo(){
@@ -640,7 +633,6 @@ public class CQRealEstate {
         }
     }
     
-    
     //check if input is a number and is between the provided values
     public boolean isBetween(String value, int minimumValue, int maximumValue){
          if(isNumber(value) && (Integer.parseInt(value) >= minimumValue && Integer.parseInt(value) <= maximumValue)){
@@ -650,9 +642,6 @@ public class CQRealEstate {
              return false;
          }
     }
-    
-  
-    
     
     public static void main(String[] args) {
         
