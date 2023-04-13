@@ -336,7 +336,7 @@ public class CQRealEstate {
                 displayWelcomeMenu();
                 return;
             }
-        }while(!isEmpty(selection) && !isString(selection));
+        }while(!isEmpty(selection) || isString(selection));
         
         name = selection;
         
@@ -349,7 +349,7 @@ public class CQRealEstate {
                 displayWelcomeMenu();
                 return;
             }
-        }while(!isEmpty(selection) && !isString(selection));
+        }while(!isEmpty(selection) || isString(selection));
         
         address = selection;
         
@@ -411,7 +411,7 @@ public class CQRealEstate {
                 displayWelcomeMenu();
                 return;
             }
-        }while(!isEmpty(selection) && !isString(selection));
+        }while(!isEmpty(selection) || isString(selection));
         address = selection;
         
         //get Land Area
@@ -622,7 +622,7 @@ public class CQRealEstate {
         //first, it tries to convert the given value to int
         //if it fails then the provided value is not an Integer
         try{
-            Integer.valueOf(value);
+            Integer.parseInt(value);
             return true;
         }catch(NumberFormatException e){
             System.out.println("[-] Enter a valid number!!");
@@ -632,11 +632,11 @@ public class CQRealEstate {
     
     public boolean isString(String value){
         try{
-            Integer.valueOf(value);
+            Integer.parseInt(value);
             System.out.println("[-] Error: No Numbers Allowed. Try again..");
-            return false;
-        }catch(NumberFormatException e){
             return true;
+        }catch(NumberFormatException e){
+            return false;
         }
     }
     
