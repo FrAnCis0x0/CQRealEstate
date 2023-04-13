@@ -10,7 +10,7 @@ package cqrealestatepackage;
  */
 public class Buyer extends Clients {
     
-    public Buyer(String name, String address, int phoneNumber) {
+    public Buyer(String name, String address, String phoneNumber) {
         super(name, address, phoneNumber);
     }
     
