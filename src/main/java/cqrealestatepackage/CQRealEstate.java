@@ -34,8 +34,7 @@ public class CQRealEstate {
         propertiesArray.add(new Land(123213131, 5000, "512 first street"));
         propertiesArray.add(new HouseAndLand(1515311212, 1500, "69 That street", 1000, 32, 128));
         
-//        salesArray.add(new Sale(propertiesArray.get(1), "10/1/2023", 559000, sellersArray.get(1), buyersArray.get(1)));
-//        salesArray.get(0).getProperty().setSold(true);
+
     }
     
     //Displays the first menu and calls functions basing on user inputs
