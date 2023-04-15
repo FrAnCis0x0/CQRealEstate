@@ -12,18 +12,28 @@ import java.util.Scanner;
  * Student ID: 12170110
  */
 public class CQRealEstate {
-    private final ArrayList<Seller> sellersArray = new ArrayList<>();
-    private final ArrayList<Buyer> buyersArray = new ArrayList<>();
+    private final ArrayList<Seller> sellersArray;
+    private final ArrayList<Buyer> buyersArray;
 
-    private final ArrayList<Land> propertiesArray = new ArrayList<>();
-    private final ArrayList<Sale> salesArray = new ArrayList<>();
-    private final Scanner scannerInput = new Scanner(System.in);
+    private final ArrayList<Land> propertiesArray;
+    private final ArrayList<Sale> salesArray;
+    private final Scanner scannerInput;
     
-    private int itemCount = 0;
     private String selection;
+    private boolean isRunning;
+    
     int lotNumber;
     String address;
     double landArea;
+
+    public CQRealEstate() {
+        this.scannerInput = new Scanner(System.in);
+        this.salesArray = new ArrayList<>();
+        this.propertiesArray = new ArrayList<>();
+        this.sellersArray = new ArrayList<>();
+        this.buyersArray = new ArrayList<>();
+        this.isRunning = true;
+    }
     
     public void addDefaultValues(){
         buyersArray.add(new Buyer("bob", "128 helloworld street", "0411235813"));
@@ -35,6 +45,11 @@ public class CQRealEstate {
         propertiesArray.add(new HouseAndLand(1515311212, 1500, "69 That street", 1000, 32, 128));
         
 
+    }
+    public void runProgram(){
+        while(isRunning){
+            displayWelcomeMenu();
+        }
     }
     
     //Displays the first menu and calls functions basing on user inputs
@@ -65,7 +80,6 @@ public class CQRealEstate {
             case "4" -> findSale();
             case "5" -> showPreviousSales();
             case "69" -> exitMethod();
-            default -> displayWelcomeMenu();
         }
 
     }
@@ -73,7 +87,6 @@ public class CQRealEstate {
     public void addSale(){
         //bet
         if(!BuyersAndSellersExist() || !propertiesExist()){
-            displayWelcomeMenu();
             return;
         }
         getSaleInfo();
@@ -116,12 +129,9 @@ public class CQRealEstate {
         System.out.println("\n--------- SEARCHING FOR SALE ---------");
         if(salesArray.isEmpty()){
             System.out.println("\n[-] No Existing Sales Found..");
-            displayWelcomeMenu();
             return;
         }
-        boolean isRunning = true;
-        
-        while(isRunning){
+        while(true){
             do{    
                 System.out.println("""
                                    [66] Display All Sales
@@ -129,37 +139,41 @@ public class CQRealEstate {
                                    """);
                 System.out.print("Enter SaleID: ");
                 selection = scannerInput.nextLine();
-                if(selection.equals("99")){
-                    displayWelcomeMenu();
-                    return;
-                    
-               }
             }while(!isEmpty(selection) || !isNumber(selection));
-            findSaleWithId(Integer.parseInt(selection));
+            
+            if(selection.equals("99")){
+                break;
+           }
+            
             
             //check selection equals 66, if true display all sales
             if(selection.equals("66")){
                 displayAllSales();
+                continue;
             }
-            //
-            else if(itemCount == salesArray.size()){
+            
+            if(salesArray.size() == findSaleWithId(Integer.parseInt(selection))){
                 System.out.println("[-] Sale with SaleID: "+selection+ " is not Found\n");
-            } else {
-                findSale();
             }
+            
+           
         }
         
     }
-    public void findSaleWithId(int id){
-        itemCount = 0;
-        salesArray.forEach(sale -> {
+    public int findSaleWithId(int id){
+        int itemCounter = 0;
+        
+        for(Sale sale : salesArray){
             if(sale.getSaleID() == id){
                 System.out.println("[+] "+sale.toString()+"\n");
             }else{
-                itemCount++;
+                itemCounter++;
                 
             }
-        });
+        }
+        
+        return itemCounter;
+       
         
     
     }
@@ -170,7 +184,6 @@ public class CQRealEstate {
 
         if(salesArray.isEmpty()){
             System.out.println("[-] No Recent Sales Found..");
-            displayWelcomeMenu();
             return;
         }
         
@@ -185,7 +198,6 @@ public class CQRealEstate {
         if(temp == 0){
             System.out.println("[-] No Recent Sales Found..");
         }
-        displayWelcomeMenu();
     }
     
     public void getSaleInfo(){
@@ -211,7 +223,6 @@ public class CQRealEstate {
            System.out.print("Select A Seller: ");
            selection = scannerInput.nextLine();
            if(selection.equals("99")){
-               displayWelcomeMenu();
                return;
            }
        }while(!isEmpty(selection) || !isBetween(selection,0,sellersArray.size()-1));
@@ -226,7 +237,6 @@ public class CQRealEstate {
            System.out.print("Select A Property: ");
            selection = scannerInput.nextLine();
            if(selection.equals("99")){
-               displayWelcomeMenu();
                return;
            }
        }while(!isEmpty(selection) || !isBetween(selection,0,propertiesArray.size()-1));
@@ -247,7 +257,6 @@ public class CQRealEstate {
             System.out.print("Select A Buyer: ");
             selection = scannerInput.nextLine();
             if(selection.equals("99")){
-                displayWelcomeMenu();
                 return;
             }
        }while(!isEmpty(selection) || !isBetween(selection,0,buyersArray.size()-1));
@@ -262,7 +271,6 @@ public class CQRealEstate {
            System.out.print("\nEnter Month: ");
            selection = scannerInput.nextLine();
            if(selection.equals("99")){
-               displayWelcomeMenu();
                return;
            }
        }while(!isEmpty(selection) || !isBetween(selection, 1, 12));
@@ -274,7 +282,6 @@ public class CQRealEstate {
            System.out.print("\nEnter Day: ");
            selection = scannerInput.nextLine();
            if(selection.equals("99")){
-               displayWelcomeMenu();
                return;
            }
        }while(!isEmpty(selection) || !isBetween(selection, 1, 31));
@@ -285,7 +292,6 @@ public class CQRealEstate {
           System.out.print("\nEnter Year: ");
           selection = scannerInput.nextLine();
           if(selection.equals("99")){
-              displayWelcomeMenu();
               return;
           }
        }while(!isEmpty(selection) || !isNumber(selection));
@@ -301,7 +307,6 @@ public class CQRealEstate {
           System.out.print("\nEnter soldPrice: ");
           selection = scannerInput.nextLine();
           if(selection.equals("99")){
-              displayWelcomeMenu();
               return;
           }
        }while(!isEmpty(selection) || !isNumber(selection));
@@ -332,7 +337,6 @@ public class CQRealEstate {
             System.out.print("Enter "+client+"'s Name: ");
             selection = scannerInput.nextLine();
             if(selection.equals("99")){
-                displayWelcomeMenu();
                 return;
             }
         }while(!isEmpty(selection) || isString(selection));
@@ -345,7 +349,6 @@ public class CQRealEstate {
             System.out.print("\nEnter "+client+"'s Address: ");
             selection = scannerInput.nextLine();
             if(selection.equals("99")){
-                displayWelcomeMenu();
                 return;
             }
         }while(!isEmpty(selection) || isString(selection));
@@ -357,7 +360,6 @@ public class CQRealEstate {
             System.out.print("\nEnter "+client+"'s Phone Number: ");
             selection = scannerInput.nextLine();
             if(selection.equals("99")){
-                displayWelcomeMenu();
                 return;
             }
         }while(!isEmpty(selection) || !isNumber(selection));
@@ -392,7 +394,6 @@ public class CQRealEstate {
             System.out.print("Enter Lot Number: ");
             selection = scannerInput.nextLine();
             if(selection.equals("99")){
-                displayWelcomeMenu();
                 return;
             }
         }while(!isEmpty(selection) || !isNumber(selection));
@@ -403,7 +404,6 @@ public class CQRealEstate {
             System.out.print("\nEnter Address: ");
             selection = scannerInput.nextLine();
             if(selection.equals("99")){
-                displayWelcomeMenu();
                 return;
             }
         }while(!isEmpty(selection) || isString(selection));
@@ -414,7 +414,6 @@ public class CQRealEstate {
             System.out.print("\nEnter Land Area: ");
             selection = scannerInput.nextLine();
             if(selection.equals("99")){
-                displayWelcomeMenu();
                 return;
             }
         }while(!isEmpty(selection) || !isNumber(selection));
@@ -443,13 +442,15 @@ public class CQRealEstate {
         HouseAndLand temp;
         //
         getLandInfo(false);
+        if(selection.equals("99")){
+            return;
+        }
         
         //get Construction Area
         do{
             System.out.print("\nEnter Construction Area: ");
             selection = scannerInput.nextLine();
             if(selection.equals("99")){
-                displayWelcomeMenu();
                 return;
             }
         }while(!isEmpty(selection) || !isNumber(selection));
@@ -460,7 +461,6 @@ public class CQRealEstate {
             System.out.print("\nEnter Number Of Bedrooms: ");
             selection = scannerInput.nextLine();
             if(selection.equals("99")){
-                displayWelcomeMenu();
                 return;
             }
         }while(!isEmpty(selection) || !isNumber(selection));
@@ -471,7 +471,6 @@ public class CQRealEstate {
             System.out.print("\nEnter Number Of Toilets: ");
             selection = scannerInput.nextLine();
             if(selection.equals("99")){
-                displayWelcomeMenu();
                 return;
             }
         }while(!isEmpty(selection) || !isNumber(selection));
@@ -577,7 +576,6 @@ public class CQRealEstate {
             System.out.printf("""
                                 [11] Add AnOther %s
                                 [99] Go to Main Menu
-                                [69] Exit
                                 """, value);
             System.out.print("\nEnter Selection: ");
             selection = scannerInput.nextLine();
@@ -586,15 +584,15 @@ public class CQRealEstate {
         switch(selection){
             case "11" ->  methodSelector(value);
             case "99" -> displayWelcomeMenu();
-            case "69" -> System.out.print("GoodBye!!");
             default -> lastExitComformation(value);
         }
         
     }
     
-    public int exitMethod(){
+    public void exitMethod(){
         System.out.println("GoodBye!!");
-        return 0;
+        isRunning = false;
+        
     }
     
     
@@ -644,8 +642,8 @@ public class CQRealEstate {
     
     public static void main(String[] args) {
         
-        CQRealEstate run = new CQRealEstate();
-        run.addDefaultValues();
-        run.displayWelcomeMenu();
+        CQRealEstate system = new CQRealEstate();
+        system.addDefaultValues();
+        system.runProgram();
     }
 }
